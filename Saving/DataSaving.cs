@@ -2,63 +2,61 @@
 using MiniFarm_Patterns_MVP_Wpf_App.Model.Interfases;
 using MiniFarm_Patterns_MVP_Wpf_App.Model.Repository;
 using MiniFarm_Patterns_MVP_Wpf_App.Presenter;
-using System.Windows.Controls;
+using System.Collections.Generic;
 
 namespace MiniFarm_Patterns_MVP_Wpf_App.Saving
 {
     public class DataSaving
     {
-        private const string FilePath = "Сохранение";
+        private const string FilePathCow = "СохранениеКоровок.xml";
+        private const string FilePathChicken = "СохранениеКурок.xml";
+        private const string FilePathTurtle = "СохранениеЧерепашек.xml";
         AnimalContext db = new();
         public IDataSaving Mode { get; set; }
-        public ListView animals { get; set; }
 
         public Repository rep { get; set; }
-        public Cow GetCow { get; set; }
-        public Chicken GetChicken { get; set; }
-        public Turtle GetTurtle { get; set; }
+        public List<Cow> GetCow { get; set; }
+        public List<Chicken> GetChicken { get; set; }
+        public List<Turtle> GetTurtle { get; set; }
 
-        //public DataSaving(IDataSaving Method)
-        //{
-        //    this.Mode = Method;
-        //}
-
-        private void AnyPages()
+        public DataSaving(IDataSaving Method)
         {
-            GetCow = new();
-            GetChicken = new();
-            GetTurtle = new();
-
-            var getCow = new Cow()
-            {
-                Name = GetCow.Name.ToString(),
-                Producing = GetCow.Producing.ToString(),
-                AmountProduce = GetCow.AmountProduce.ToString()
-            };
-            var getChicken = new Chicken()
-            {
-                Name = GetChicken.Name.ToString(),
-                Producing = GetChicken.Producing.ToString(),
-                AmountProduce = GetChicken.AmountProduce.ToString()
-            };
-            var getTurtle = new Turtle()
-            {
-                Name = GetTurtle.Name.ToString(),
-                Producing = GetTurtle.Producing.ToString(),
-                AmountProduce = GetTurtle.AmountProduce.ToString()
-            };
-
-            this.GetCow = getCow;
-            this.GetChicken = getChicken;
-            this.GetTurtle = getTurtle;
+            this.Mode = Method;
         }
 
-        public void Save()
+        private void AnyPagesCow()
         {
-            this.AnyPages();
-            Mode.SaveDataCow(FilePath, GetCow);
-            Mode.SaveDataChicken(FilePath, GetChicken);
-            Mode.SaveDataTurtle(FilePath, GetTurtle);
+            GetCow = new();
+
+            this.GetCow.ToString();
+        }
+        private void AnyPagesChicken()
+        {
+            GetChicken = new();
+
+            this.GetChicken.ToString();
+        }
+        private void AnyPagesTurtle()
+        {
+            GetTurtle = new();
+
+            this.GetTurtle.ToString();
+        }
+
+        public void SaveCow()
+        {
+            this.AnyPagesCow();
+            Mode.SaveDataCow(FilePathCow, GetCow);
+        }
+        public void SaveChicken()
+        {
+            this.AnyPagesChicken();
+            Mode.SaveDataChicken(FilePathChicken, GetChicken);
+        }
+        public void SaveTurtle()
+        {
+            this.AnyPagesTurtle();
+            Mode.SaveDataTurtle(FilePathTurtle, GetTurtle);
         }
     }
 }

@@ -101,11 +101,12 @@ namespace MiniFarm_Patterns_MVP_Wpf_App.View.AnimalWindows
 
         private void Button_Ok_Saving(object sender, RoutedEventArgs e)
         {
-            var saveToDocx = new SaveAsDocx("Сохранение");
+            var saveToDocx = new SaveAsDocx("Сохранение.docx");
 
-            DataSaving bw = new DataSaving();
+            DataSaving bw = new DataSaving(saveToDocx);
 
-            bw.Save();
+            bw.Mode = saveToDocx;
+            bw.SaveCow();
             CleareTextBox();
             pSave.IsOpen = false;
         }

@@ -1,9 +1,12 @@
 ﻿using MiniFarm_Patterns_MVP_Wpf_App.Model.Classes;
+using MiniFarm_Patterns_MVP_Wpf_App.Model.Interfases;
+using System.Collections.Generic;
 using System.IO;
+using System.Xml.Serialization;
 
 namespace MiniFarm_Patterns_MVP_Wpf_App.Saving
 {
-    public class SaveAsDocx
+    public class SaveAsDocx : IDataSaving
     {
         private string nameOfFile;
         public SaveAsDocx(string NameOfFile)
@@ -11,33 +14,37 @@ namespace MiniFarm_Patterns_MVP_Wpf_App.Saving
             this.nameOfFile = NameOfFile;
         }
 
-        private string CreateDocx(string Pages)
+        public void SaveDataCow(string filePath, List<Cow> cow)
         {
-            return Pages;
+            XmlSerializer xmlSerializer = new XmlSerializer(typeof(List<Cow>));
+
+            Stream fStream = new FileStream(filePath, FileMode.Create, FileAccess.Write);
+
+            xmlSerializer.Serialize(fStream, cow);
+
+            fStream.Close();
         }
 
-        public void SaveDataCow(string filePath, Cow cow)
+        public void SaveDataChicken(string filePath, List<Chicken> bird)
         {
-            //string json = JsonConvert.SerializeObject(cow);
+            XmlSerializer xmlSerializer = new XmlSerializer(typeof(List<Chicken>));
 
-            using (StreamWriter sw = new StreamWriter($"{nameOfFile}.docx", true))
-                sw.WriteLine(CreateDocx(cow.ToString()));
+            Stream fStream = new FileStream(filePath, FileMode.Create, FileAccess.Write);
+
+            xmlSerializer.Serialize(fStream, bird);
+
+            fStream.Close();
         }
 
-        public void SaveDataChicken(string filePath, Chicken bird)
+        public void SaveDataTurtle(string filePath, List<Turtle> turtles)
         {
-            //string json = JsonConvert.SerializeObject(bird);
+            XmlSerializer xmlSerializer = new XmlSerializer(typeof(List<Turtle>));
 
-            using (StreamWriter sw = new StreamWriter($"{nameOfFile}.docx", true))
-                sw.WriteLine(CreateDocx(bird.ToString()));
-        }
+            Stream fStream = new FileStream(filePath, FileMode.Create, FileAccess.Write);
 
-        public void SaveDataTurtle(string filePath, Turtle turtles)
-        {
-            //string json = JsonConvert.SerializeObject(turtles);
+            xmlSerializer.Serialize(fStream, turtles);
 
-            using (StreamWriter sw = new StreamWriter($"{nameOfFile}.docx", true))
-                sw.WriteLine(CreateDocx(turtles.ToString()));
+            fStream.Close();
         }
     }
 }
